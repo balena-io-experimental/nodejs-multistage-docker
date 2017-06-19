@@ -8,4 +8,4 @@ SerialPort.list(function (err, ports) {
   });
 });
 
-console.log('Hello, test!');
+console.log('Hello, this should not break the cache');
