@@ -8,4 +8,4 @@ SerialPort.list(function (err, ports) {
   });
 });
 
-console.log('Hello, serial!');
+console.log('Hello, test!');
