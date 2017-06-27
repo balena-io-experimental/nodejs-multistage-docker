@@ -9,3 +9,9 @@ SerialPort.list(function (err, ports) {
 });
 
 console.log('Hello, world!');
+
+function intervalFunc () {
+  console.log('Cant stop me now!');
+}
+
+setInterval(intervalFunc, 1500);
