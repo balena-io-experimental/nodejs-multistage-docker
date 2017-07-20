@@ -5,7 +5,7 @@ FROM resin/raspberry-pi-alpine-node:6.11.1 AS buildstep
 # Copy in package.json, install 
 # and build all node modules
 WORKDIR /usr/src/app
-COPY package.json package.json
+COPY package.json .
 RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf /tmp/*
 
 # This is our runtime container that will end up
