@@ -1,23 +1,21 @@
 # This is the base for our build step container
 # which has all our build essentials
-FROM resin/raspberry-pi-alpine-node:6.10 AS buildstep
+FROM resin/raspberry-pi-alpine-node:6.11.1 AS buildstep
 
 # Copy in package.json, install 
 # and build all node modules
-COPY package.json /app/package.json
-WORKDIR /app
-RUN npm i --production
+WORKDIR /usr/src/app
+COPY package.json .
+RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf /tmp/*
 
 # This is our runtime container that will end up
 # running on the device.
-FROM resin/raspberry-pi-alpine:3.6
+FROM resin/raspberry-pi-alpine-node:6.11.1-slim
 
-RUN apk add --no-cache nodejs
-
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy our node_modules into our deployable container context.
-COPY --from=buildstep /app/node_modules node_modules
+COPY --from=buildstep /usr/src/app/node_modules node_modules
 COPY . .
 
 # Launch our App.
